@@ -1,12 +1,16 @@
-#show-contact {
+#lists {
   display: none;
 }
 
-.contact {
+.list {
   cursor: pointer;
   color: #08c;
 }
 
-.contact:hover {
+.list:hover {
   text-decoration: underline;
+}
+
+#show-list {
+  display: none;
 }
