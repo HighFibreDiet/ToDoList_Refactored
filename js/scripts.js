@@ -2,20 +2,15 @@ var ToDoList = {
 
 };
 
+var Task = {
+
+};
+
 
 $(document).ready(function() {
-  
-  $("#add-task").click(function() {
-    $("#new-tasks").append('<div class="new-task-append">' + 
-                              '<div class="form-group">' + 
-                                  '<label for="new-task">Enter a task</label>' + 
-                                  '<input type="text" class="form-control new-task">' + 
-                              '</div>' +                                 
-                            '</div>');
-  });
+  var currentList;
 
-
-  $("form#toDoList").submit(function(event) {
+  $("form#add-list").submit(function(event) {
     event.preventDefault();
     var inputtedName = $("input#new-list-name").val();
 
@@ -23,37 +18,41 @@ $(document).ready(function() {
     newList.tasks = [];
     newList.listName = inputtedName;
 
-    console.log(newList.listName);
+    $("ul#lists").append("<li><span class='list-name'>" + newList.listName + "</span></li>");
 
-    var inputtedTask = $("input#new-task-name").val();
-    newList.tasks.push(inputtedTask);
-
-    $(".new-task-append").each(function() {
-      var inputtedTask = $(this).find("input.new-task").val();
-
-      newList.tasks.push(inputtedTask);
-    });
-
-    $("ul#lists").append("<li><span class='list'>" + newList.listName + "</span></li>");
-    $("#lists").show();
-
-    $("#lists").last().click(function() {
-
-      $("#show-list").show();
-
-      $("#show-list h2").text(newList.listName);
-
+    $(".list-name").last().click(function() {
+      currentList = newList;
       $("ul#display-tasks").text("");
-
-      newList.tasks.forEach(function(task) {
-        $("ul#display-tasks").append("<li class = 'task-click'>" + task + "</li>");
-        $(".task-click").last().click(function() {
-          alert(task);
-        });
+      currentList.tasks.forEach(function(task) {
+        $("ul#display-tasks").append("<li><span class='task'>" + task + "</span></li>");
       });
-
-      
     });
+
+    $("#enter-tasks").show();
+    $("ul#display-tasks").text("");
+    currentList = newList;
+  });
+
+  $("form#add-task").submit(function(event) {
+    event.preventDefault();
+    var inputtedTask = $("input#new-task-name").val();
+    var newTask = Object.create(Task);
+    newTask.status = "incomplete";
+
+    //var newList = Object.create(ToDoList);
+    currentList.tasks.push(inputtedTask);
+
+    $("ul#display-tasks").append("<li><span class='task'>" + inputtedTask + "</span></li>");
+    $(".task").last().click(function() {
+      console.log("test");
+      newTask.status = "complete";
+      $("ul#display-tasks").append("<li><span class='task'>" + inputtedTask + "</span></li>");
+      $(this).parent().remove();
+    });
+
+    // $("#list-name").last().click(function() {
+    //   currentList = newList;
+    // });
   });
   
 });

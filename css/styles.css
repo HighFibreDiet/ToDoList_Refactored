@@ -1,16 +1,13 @@
-#lists {
-  display: none;
-}
 
-.list {
+.list-name {
   cursor: pointer;
   color: #08c;
 }
 
-.list:hover {
+.list-name:hover {
   text-decoration: underline;
 }
 
-#show-list {
+#enter-tasks {
   display: none;
 }
